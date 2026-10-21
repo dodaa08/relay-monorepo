@@ -15,7 +15,7 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
-              ## Clone code base on ubuntu machine
+            
             
             - name: Docker login
               uses: docker/login-action@v2
