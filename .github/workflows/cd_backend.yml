@@ -20,8 +20,8 @@ jobs:
             - name: Docker login
               uses: docker/login-action@v2
               with:
-                username : ${secrets.DOCKERHUB_USERNAME}
-                password : ${secrets.DOCKERHUB_PASSWORD}
+                username : ${{secrets.DOCKERHUB_USERNAME}}
+                password : ${{secrets.DOCKERHUB_PASSWORD}}
               ## Explore how these actions are deployed and u are able to use em, and knowing whats happening under the hood
             
             - name: build and push
