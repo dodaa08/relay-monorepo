@@ -1,0 +1,17 @@
+{
+  "name": "@repo/db",
+  "private": true,
+  "exports": {
+    "./client": "./index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.3"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@types/node": "^26.6.5",
+    "dotenv": "^18.0.8"
+  }
+}

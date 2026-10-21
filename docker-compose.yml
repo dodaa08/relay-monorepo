@@ -1,0 +1,46 @@
+services:
+     postgres:
+        image: postgres
+        environment:
+          POSTGRES_PASSWORD: mysecretpassword
+        ports: 
+          - "5432:5432"
+        volumes:
+          - pgdata:/var/lib/postgresql/data
+        
+     backend:
+        image: be
+        build: 
+          network: host 
+          context: ./
+          dockerfile: ./docker/Dockerfile.be
+
+        environment:
+          DATABASE_URL: postgresql://postgres:mysecretpassword@postgres:5432/postgres
+
+        ports:
+         - "8080:8080"
+    
+        depends_on:
+          - postgres
+
+     websockets:
+        image: ws
+        build: 
+          network: host 
+          context: ./
+          dockerfile: ./docker/Dockerfile.ws
+
+        environment:
+          DATABASE_URL: postgresql://postgres:mysecretpassword@postgres:5432/postgres
+
+        ports:
+         - "8081:8081"
+    
+        depends_on:
+          - postgres
+
+volumes:
+  pgdata:
+
+# then we get to fe and ci cd to auto deploy image to docker hub + run images on vm or run compose on vm this and then VM

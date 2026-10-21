@@ -1,0 +1,19 @@
+FROM oven/bun:1-alpine
+
+WORKDIR /app
+
+COPY package*.json turbo.json bun.lock /app/
+
+COPY apps/fe/package.json /app/apps/fe/
+
+COPY packages/db/package.json /app/packages/db/
+
+RUN bun install
+
+COPY apps/fe/ /app/apps/fe/
+
+COPY packages/db /app/packages/db/
+
+EXPOSE  3000
+
+CMD ["sh", "-c", "bun run db:migrate && exec bun run build:web && exec bun run start:web"]

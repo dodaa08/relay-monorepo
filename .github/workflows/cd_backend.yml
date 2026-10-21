@@ -1,0 +1,35 @@
+## Build the docker image
+## Push it to dockerhub
+## SSH into the vm and start the new image
+
+name: Build and deploy backend
+
+on: 
+    push: 
+        branches: [main]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+              ## Clone code base on ubuntu machine
+            
+            - name: Docker login
+              uses: docker/login-action@v2
+              with:
+                username : ${secrets.DOCKERHUB_USERNAME}
+                password : ${secrets.DOCKERHUB_PASSWORD}
+              ## Explore how these actions are deployed and u are able to use em, and knowing whats happening under the hood
+            
+            - name: build and push
+              uses: docker/build-push-action@v4
+              with:
+                context: .
+                file: ./docker/Dockerfile.be
+                push: true
+                tags: kartikdoda/todo-backend:${{ github.sha }}
+            
+            

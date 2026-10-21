@@ -1,0 +1,41 @@
+{
+  "name": "deps",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check-types": "turbo run check-types",
+    "db:migrate" : "cd packages/db && bunx prisma migrate deploy && cd ../..",
+    "db:generate" : "cd packages/db && bunx prisma generate && cd ../..",
+    "start:web" : "cd apps/fe && bun run dev && cd ../..",
+    "build:web" : "cd apps/fe && bun run build && cd ../..",
+    "start:ws" : "cd apps/ws && bun run dev && cd ../..",
+    "start:be" : "cd apps/be && bun run dev && cd ../.."
+  },
+  "devDependencies": {
+    "prettier": "3.9.6",
+    "prisma": "^7.10.1",
+    "turbo": "^2.11.9",
+    "typescript": "7.0.2"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "bun",
+      "version": "1.3.3"
+    }
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.10.1",
+    "@prisma/client": "7",
+    "pg": "^8.23.1"
+  }
+}
