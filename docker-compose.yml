@@ -1,12 +1,12 @@
 services:
      postgres:
-        image: postgres
+        image: postgres:16
         environment:
           POSTGRES_PASSWORD: mysecretpassword
         ports: 
           - "5432:5432"
         volumes:
-          - pgdata:/var/lib/postgresql/data
+          - pgdata:/var/lib/postgresql
         
      backend:
         image: be
@@ -36,6 +36,22 @@ services:
 
         ports:
          - "8081:8081"
+    
+        depends_on:
+          - postgres
+      
+     fronted:
+        image: fe
+        build: 
+          network: host 
+          context: ./
+          dockerfile: ./docker/Dockerfile.fe
+
+        environment:
+          DATABASE_URL: postgresql://postgres:mysecretpassword@postgres:5432/postgres
+
+        ports:
+         - "3000:3000"
     
         depends_on:
           - postgres
