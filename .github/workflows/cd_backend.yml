@@ -15,8 +15,6 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
-            
-            
             - name: Docker login
               uses: docker/login-action@v2
               with:
@@ -32,4 +30,17 @@ jobs:
                 push: true
                 tags: kartikdoda/todo-backend:${{ github.sha }}
             
-            
+            - name: deploy to vm
+              uses: appleboy/ssh-action@v1
+              with:
+                host: ${{ secrets.SSH_HOST }}
+                username: ${{ secrets.SSH_USER }}
+                key: ${{ secrets.SSH_KEY }}
+                port: ${{ secrets.SSH_PORT }}
+                script: |
+                   cd ~/relay-monorepo
+                   git pull origin main
+                   export TAG=${{ github.sha }}
+                   docker compose pull
+                   docker compose up -d
+                   docker image prune -f

@@ -15,5 +15,4 @@ RUN DATABASE_URL=postgresql://dummy:dummy@localhost:5432/dummy bun run db:genera
 
 EXPOSE  8081
 
-WORKDIR /app
 CMD ["sh", "-c", "bun run db:migrate && exec bun run start:ws"]
